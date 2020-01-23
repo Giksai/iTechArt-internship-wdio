@@ -17,8 +17,13 @@ describe('dev.by website',() => {
         browser.pause(1000);
     });
     afterAll(() => {
+        logger.trace(`First test has ended.`);
         browser.pause(3000);
     });
+    beforeAll(() => {
+        logger.trace(`First test has started.`);
+    });
+
 
     it(`'s auth page's auth button should not be active when no data has been entered (1)`,
        () => {

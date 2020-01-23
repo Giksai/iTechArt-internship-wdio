@@ -12,10 +12,12 @@ describe('dev.by website',() => {
         browser.pause(1000);
     });
     afterAll(() => {
+        logger.trace(`Second test has ended.`);
         browser.pause(3000);
     });
     beforeAll(() => {
         browser.maximizeWindow();
+        logger.trace(`Second test has started.`);
     });
 
     it(`'s sandbox page's title should be displaying ${data.sandbox_correctHeader} 

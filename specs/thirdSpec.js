@@ -13,10 +13,12 @@ describe('dev.by website',() => {
         browser.pause(1000);
     });
     afterAll(() => {
+        logger.trace(`Third test has ended.`);
         browser.pause(3000);
     });
     beforeAll(() => {
         browser.maximizeWindow();
+        logger.trace(`Third test has started.`);
     });
 
     it(`'s company page's stats should contain 
