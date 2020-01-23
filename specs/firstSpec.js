@@ -6,6 +6,12 @@ const log4js = require('../loggerConfig/loggerConfigurator'),
 
 const logger = log4js.getLogger('default');
 
+function authenticateAndWaitForErrors() {
+    let prevErrors = authPage.getAllErrors();
+    authPage.authenticate();
+    authPage.waitForErrorsToUpdate(prevErrors);
+}
+
 describe('dev.by website',() => {
     afterEach(() => {
         browser.pause(1000);
@@ -37,7 +43,7 @@ describe('dev.by website',() => {
     it(`'s auth page should display error message: ${errors.auth_emptyPassword} 
             when entering username without password (4)`, 
         () => {
-            authPage.authenticate();
+            authenticateAndWaitForErrors();
             expect(authPage.getAllErrors()).toContain(errors.auth_emptyPassword);
     });
 
@@ -53,7 +59,7 @@ describe('dev.by website',() => {
     it(`'s auth page should display error message: ${errors.auth_emptyLogin} 
             when entering password without username (6)`, 
         () => {
-            authPage.authenticate();
+            authenticateAndWaitForErrors();
             expect(authPage.getAllErrors()).toContain(errors.auth_emptyLogin);
     });
 
@@ -66,7 +72,7 @@ describe('dev.by website',() => {
     it(`'s auth page should display error message: ${errors.auth_wrongData} 
             when entering incorrect username and password (8)`, 
         () => {
-            authPage.authenticate();
+            authenticateAndWaitForErrors();
             expect(authPage.getAllErrors()).toContain(errors.auth_wrongData);
     });
 

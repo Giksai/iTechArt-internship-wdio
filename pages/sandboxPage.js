@@ -54,6 +54,7 @@ class SandboxPage extends BasePage {
     }
 
     waitForNewsUpdate(prevValue) {
+        logger.debug(`waitForNewsUpdate: waiting for news to update.`);
         super.waitForElementToUpdate(selectors.lastNews, prevValue);
     }
 

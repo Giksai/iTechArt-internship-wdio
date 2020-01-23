@@ -54,6 +54,12 @@ class BasePage {
         elementToWaitFor.waitForDisplayed(waitingTime);
     }
 
+    waitForErrorsToUpdate(prevValue, updateTime = 10000) {
+        browser.waitUntil(() => {
+            return this.getAllErrors() !== prevValue
+          }, updateTime, `errors must update.`);
+    }
+
     waitForElementToUpdate(element, prevValue, updateTime = 20000) {
         browser.waitUntil(() => {
             return $(element).getText() !== prevValue
