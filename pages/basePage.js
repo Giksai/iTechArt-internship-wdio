@@ -48,16 +48,16 @@ class BasePage {
         $(selector).clearValue();
     }
 
-    waitForElement(selector, waitingTime = 10000) {
+    waitForElement(selector, waitingTime = 20000) {
         logger.debug(`waitForElement: waiting: ${waitingTime} for element: ${selector} to appear.`);
         const elementToWaitFor = $(selector);
         elementToWaitFor.waitForDisplayed(waitingTime);
     }
 
-    waitForElementToUpdate(element, prevValue) {
+    waitForElementToUpdate(element, prevValue, updateTime = 20000) {
         browser.waitUntil(() => {
-            return $$(element).getText() !== prevValue
-          }, 5000, `element ${element} must update`);
+            return $(element).getText() !== prevValue
+          }, updateTime, `element ${element} must update`);
     }
 
     getAllErrors(prevValue = null) {

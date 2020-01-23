@@ -31,11 +31,10 @@ describe('dev.by website',() => {
             current page counter should update to second page (2)`,
        () => {
         let allNewsBefore = sandboxPage.getAllNews();
+        let prevValue = sandboxPage.getLastNews();
         sandboxPage.nextPage();
         //Waiting until news are updated
-        browser.waitUntil(() => {
-            return sandboxPage.getLastNews() !== allNewsBefore[allNewsBefore.length-1]
-          }, 5000, 'news text must update');
+        sandboxPage.waitForNewsUpdate(prevValue);
         let allNewsAfter = sandboxPage.getAllNews();
         expect(allNewsBefore).not.toEqual(allNewsAfter);
         expect(sandboxPage.getCurrentPage()).toEqual(2);
@@ -45,7 +44,10 @@ describe('dev.by website',() => {
             current page should update to 71,
             last news should be ${data.sandbox_lastNews} (3)`,
        () => {
+        let prevValue = sandboxPage.getLastNews();
         sandboxPage.goToLastPage();
+        //Waiting until news are updated
+        sandboxPage.waitForNewsUpdate(prevValue);
         expect(sandboxPage.isNextPageActive()).toEqual(false);
         expect(sandboxPage.getCurrentPage()).toEqual(71);
         expect(sandboxPage.getLastNews()).toContain(data.sandbox_lastNews);

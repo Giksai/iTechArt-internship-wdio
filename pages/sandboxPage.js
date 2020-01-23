@@ -53,6 +53,10 @@ class SandboxPage extends BasePage {
         return currentPage;
     }
 
+    waitForNewsUpdate(prevValue) {
+        super.waitForElementToUpdate(selectors.lastNews, prevValue);
+    }
+
     goToLastPage() {
         logger.debug(`goToLastPage: going to the last page.`);
         super.clickOnElement(selectors.lastPageBtn);

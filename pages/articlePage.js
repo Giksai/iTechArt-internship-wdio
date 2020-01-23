@@ -21,6 +21,7 @@ class ArticlePage extends BasePage {
     }
 
     commentExists() {
+        super.waitForElement(selectors.commentBtn, 5000);
         let exists = $(selectors.commentBtn).isExisting();
         logger.debug(`commentExists: comment exists: ${exists}.`);
         return exists;
