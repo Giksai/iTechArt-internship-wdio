@@ -71,7 +71,10 @@ describe('dev.by website',() => {
 
     it(`'s should open login form (6)`,
        () => {
+           //this click does not work with the first try for some reason
         articlePage.clickOnElement(articlePage.selectors.commentSection);
+        articlePage.clickOnElement(articlePage.selectors.commentSection);
+
         expect(authPage.isAtAuthPage()).toEqual(true);
     });
 
