@@ -8,12 +8,9 @@ const log4js = require('../loggerConfig/loggerConfigurator'),
 const logger = log4js.getLogger('default');
 
 describe('dev.by website',() => {
-    afterEach(() => {
-        browser.pause(1000);
-    });
     afterAll(() => {
+        browser.saveScreenshot(`screenshots/${Date.now()}.png`);
         logger.trace(`Second test has ended.`);
-        browser.pause(3000);
     });
     beforeAll(() => {
         browser.maximizeWindow();

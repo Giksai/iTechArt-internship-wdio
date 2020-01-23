@@ -4,7 +4,8 @@
   "description": "Set of automated tasks using wdio",
   "main": "start.js",
   "scripts": {
-    "test": "node start.js"
+    "test": "node start.js",
+    "posttest": "allure generate allure-results --clean -o allure-report  && allure open"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/Giksai/iTechArt-internship-wdio#readme",
   "devDependencies": {
+    "@wdio/allure-reporter": "^5.18.6",
     "@wdio/cli": "^5.18.6",
     "@wdio/firefox-profile-service": "^5.16.11",
     "@wdio/jasmine-framework": "^5.18.6",

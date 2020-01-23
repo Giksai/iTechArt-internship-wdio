@@ -40,6 +40,7 @@ class AuthPage extends BasePage {
     }
 
     isAtAuthPage() {
+        super.waitForElement(selectors.authCheck);
         let isAtAuth = $(selectors.authCheck).isExisting();
         logger.debug(`isAtAuthPage: at auth page: ${isAtAuth}.`);
         return isAtAuth;

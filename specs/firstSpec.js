@@ -13,12 +13,9 @@ function authenticateAndWaitForErrors() {
 }
 
 describe('dev.by website',() => {
-    afterEach(() => {
-        browser.pause(1000);
-    });
     afterAll(() => {
+        browser.saveScreenshot(`screenshots/${Date.now()}.png`);
         logger.trace(`First test has ended.`);
-        browser.pause(3000);
     });
     beforeAll(() => {
         logger.trace(`First test has started.`);
