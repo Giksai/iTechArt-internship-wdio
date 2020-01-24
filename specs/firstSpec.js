@@ -51,10 +51,8 @@ describe('dev.by website',() => {
 
     it(`'s auth page's auth button should not be active when username has not been entered (5)`, 
         () => {
-            
+            browser.refresh();
             authPage.enterAuthInfo(authPage.types.password, data.auth_WrongPassword);
-            authPage.clearField(authPage.types.login);
-            //authPage.enterAuthInfo(authPage.types.login, '');
             expect(authPage.isSubmitBtnActive()).toEqual(false);
     });
 
