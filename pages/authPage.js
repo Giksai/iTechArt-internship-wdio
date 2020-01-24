@@ -6,13 +6,11 @@ const logger = log4js.getLogger('default');
 const selectors = {
     submitBtn: `//button[@type="submit"]`,
     authCheck: `//div[@class="auth-page"]`,
-    authBoxes: (type) => {
-        return `//input[@name="${type}"]`;
-    }
+    authBoxes: (type) => `//input[@name="${type}"]`,
 };
 const types = {
     login: `email`,
-    password: `password`
+    password: `password`,
 };
 
 class AuthPage extends BasePage {
@@ -36,11 +34,12 @@ class AuthPage extends BasePage {
 
     clearField(type) {
         logger.debug(`clearField: clearing field: ${type}.`);
-        super.clearText(selectors.authBoxes(type));
+        $(selectors.authBoxes(type)).click();
+        browser.keys(['Control', 'a']);
+        browser.keys('Delete');
     }
 
     isAtAuthPage() {
-        super.waitForElement(selectors.authCheck);
         let isAtAuth = $(selectors.authCheck).isExisting();
         logger.debug(`isAtAuthPage: at auth page: ${isAtAuth}.`);
         return isAtAuth;

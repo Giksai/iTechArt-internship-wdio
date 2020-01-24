@@ -4,14 +4,11 @@ const log4js = require('../loggerConfig/loggerConfigurator'),
 const logger = log4js.getLogger('default');
 
 const selectors = {
-    headerLink: (linkName) => {
-        return `//div[@class="header-nav__item"]/a[text()="${linkName}"]`;
-    },
+    headerLink: (linkName) => `//div[@class="header-nav__item"]/a[text()="${linkName}"]`,
 };
 const sections = {
     authentication: `//div[@class="header__auth"]/div/a`,
     profile: `//div[@class="header__auth"]/a[@class="header__auth-image-wrapper"]`,
-
 };
 const headerLinksTexts = {
     sandbox: 'Песочница',

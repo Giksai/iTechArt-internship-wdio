@@ -1,24 +1,20 @@
-const log4js = require('../loggerConfig/loggerConfigurator'),
-    {mainPage} = require('../pages/mainPage'),
+const {mainPage} = require('../pages/mainPage'),
     {companiesPage} = require('../pages/companiesPage'),
-    {data, statValues, checkBoxData} = require('./specData');
+    {statValues, checkBoxData} = require('./specData');
 
-const logger = log4js.getLogger('default');
+let employeesAmount = 500,
+    maxemployeesAmount = 99999,
+    firstCompanyName = `A1 (Унитарное предприятие "А1")`;
 
 let companiesCheckBoxes;
 let citiesCheckBoxes;
 
-describe('dev.by website',() => {
-    afterAll(() => {
-        browser.saveScreenshot(`screenshots/${Date.now()}.png`);
-        logger.trace(`Third test has ended.`);
-    });
+describe(`dev.by website's companies page check.`,() => {
     beforeAll(() => {
         browser.maximizeWindow();
-        logger.trace(`Third test has started.`);
     });
 
-    it(`'s company page's stats should contain 
+    it(` Companies page's stats should contain 
             ${statValues.companies} companies,
             ${statValues.users} users,
             ${statValues.jobs} jobs (1)`,
@@ -33,7 +29,7 @@ describe('dev.by website',() => {
                 .toBeGreaterThan(statValues.jobs);
     });
 
-    it(`'s companies page's checkboxes should be checked (2)`,
+    it(` Companies page's checkboxes should be checked (2)`,
        () => {
            companiesPage.waitForSearchWindowToAppear();
             companiesCheckBoxes = companiesPage.getAllCheckboxesByType(
@@ -45,7 +41,7 @@ describe('dev.by website',() => {
             }  
     });
 
-    it(`'s companies page's checkboxes should not be checked (3)`,
+    it(` Companies page's checkboxes should not be checked (3)`,
        () => {
             companiesPage.resetAllParameters();
             for(let checkBox of companiesCheckBoxes.concat(citiesCheckBoxes)) {
@@ -53,7 +49,7 @@ describe('dev.by website',() => {
             } 
     });
 
-    it(`'s companies page's search results should contain ${data.firstCompanyName} as the first result (4)`,
+    it(` Companies page's search results should contain ${firstCompanyName} as the first result (4)`,
        () => {
             for(let checkBox of companiesCheckBoxes) {
                 if(checkBox.name === checkBoxData.CType_BigData
@@ -64,11 +60,11 @@ describe('dev.by website',() => {
                 if(checkBox.name === checkBoxData.City_Minsk)
                     checkBox.set();
             }
-            companiesPage.setEmployeesAmount(data.employeesAmount, data.maxemployeesAmount);
+            companiesPage.setEmployeesAmount(employeesAmount, maxemployeesAmount);
             let prevValue = companiesPage.getCompanyNameByIndex(1);
             companiesPage.submit();
             companiesPage.waitForCompaniesToChange(prevValue);
-            expect(companiesPage.getCompanyNameByIndex(1)).toEqual(data.firstCompanyName);
+            expect(companiesPage.getCompanyNameByIndex(1)).toEqual(firstCompanyName);
     });
 
   });

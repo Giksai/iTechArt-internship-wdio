@@ -20,9 +20,9 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './specs/firstSpec.js',
-        './specs/secondSpec.js',
-        './specs/thirdSpec.js',
+        './specs/1_authenticationSpec.js',
+        './specs/2_news&commentsSpec.js',
+        './specs/3_companiesSpec.js',
     ],
     // Patterns to exclude.
     exclude: [
@@ -179,8 +179,10 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+        require('./loggerConfig/loggerConfigurator').getLogger('default')
+            .trace(`All tests has started.`);
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name
@@ -192,12 +194,15 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    // beforeSuite: function (suite) {
-    // },
+    beforeSuite: function (suite) {
+        require('./loggerConfig/loggerConfigurator').getLogger('default')
+            .trace(`Test ${suite.file} has started.`);
+    },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
     // beforeTest: function (test, context) {
+        
     // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
@@ -215,6 +220,7 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine).
      */
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
+        
     // },
 
 
@@ -222,8 +228,11 @@ exports.config = {
      * Hook that gets executed after the suite has ended
      * @param {Object} suite suite details
      */
-    // afterSuite: function (suite) {
-    // },
+    afterSuite: function (suite) {
+        require('./loggerConfig/loggerConfigurator').getLogger('default')
+            .trace(`Test ${suite.file} has ended.`);
+        browser.saveScreenshot(`screenshots/${Date.now()}.png`);
+    },
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {String} commandName hook command name
@@ -240,8 +249,10 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that ran
      */
-    // after: function (result, capabilities, specs) {
-    // },
+    after: function (result, capabilities, specs) {
+        require('./loggerConfig/loggerConfigurator').getLogger('default')
+            .trace(`All tests has ended with result ${result}.`);
+    },
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {Object} config wdio configuration object

@@ -8,7 +8,6 @@ const selectors = {
     commentBtn: `//button/span[text()="1 комментарий"]`,
     commentDate: `//div[@class="comments__list"]/div/div/div/div/div/a`,
     commentSection: `//span[@class="comments__auth-button-inner"]`,
-
 };
 
 class ArticlePage extends BasePage {
@@ -38,7 +37,6 @@ class ArticlePage extends BasePage {
         logger.debug(`getCommentSectionText: got text of the comment section: ${commentSText}.`);
         return commentSText;
     }
-
 };
 
 module.exports = {

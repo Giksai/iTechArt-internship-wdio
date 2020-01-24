@@ -9,8 +9,7 @@ const selectors = {
     newsNames: `//div[@class="article-preview__info"]/a/h3`,
     lastNews: `//ul[@class="article-preview-list__list"]/li[last()]/div/div/a/h3`,
     currentPage: `//ul[@class="paginator__list"]/li[contains(@class, "item_active")]/a`,
-    lastPageBtn: `//li[@class="paginator__list-item"]/a[text()="71"]`,
-
+    lastPageBtn: `//li[@class="paginator__list-item"][last()]/a`,
 };
 
 class SandboxPage extends BasePage {
@@ -37,11 +36,13 @@ class SandboxPage extends BasePage {
         logger.debug(`getAllNews: got all news: ${allNews}.`);
         return allNews;
     }
+
     getLastNews() {
         let newsText = $(selectors.lastNews).getText();
         logger.debug(`getFirstNews: first news text is: ${newsText}.`);
         return newsText;
     }
+
     goToLastNews() {
         logger.debug(`goToLastNews: going to the last article.`);
         super.clickOnElement(selectors.lastNews);
@@ -62,7 +63,6 @@ class SandboxPage extends BasePage {
         logger.debug(`goToLastPage: going to the last page.`);
         super.clickOnElement(selectors.lastPageBtn);
     }
-
 };
 
 module.exports = {

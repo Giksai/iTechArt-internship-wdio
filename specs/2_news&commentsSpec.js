@@ -1,32 +1,28 @@
-const log4js = require('../loggerConfig/loggerConfigurator'),
-    {mainPage} = require('../pages/mainPage'),
+const {mainPage} = require('../pages/mainPage'),
     {authPage} = require('../pages/authPage'),
     {articlePage} = require('../pages/articlePage'),
-    {sandboxPage} = require('../pages/sandboxPage'),
-    {data} = require('./specData');
+    {sandboxPage} = require('../pages/sandboxPage');
 
-const logger = log4js.getLogger('default');
+let commentSectionText = `Войдите, чтобы оставить комментарий`,
+    commentDate = `25 сентября 2018`,
+    sandbox_lastNews = `Итоги Hackby’13: 39 проектов за 24 часа`,
+    sandbox_correctHeader = `Песочница`;
 
-describe('dev.by website',() => {
-    afterAll(() => {
-        browser.saveScreenshot(`screenshots/${Date.now()}.png`);
-        logger.trace(`Second test has ended.`);
-    });
+describe(`dev.by website's news and comments check.`,() => {
     beforeAll(() => {
         browser.maximizeWindow();
-        logger.trace(`Second test has started.`);
     });
 
-    it(`'s sandbox page's title should be displaying ${data.sandbox_correctHeader} 
+    it(` Sandbox page's title should be displaying ${sandbox_correctHeader} 
             and next page button should be active (1)`,
        () => {
         mainPage.open();
         mainPage.navigateToHeaderLink(mainPage.headerLinksTexts.sandbox);
-        expect(sandboxPage.getHeader()).toEqual(data.sandbox_correctHeader);
+        expect(sandboxPage.getHeader()).toEqual(sandbox_correctHeader);
         expect(sandboxPage.isNextPageActive()).toEqual(true);
     });
 
-    it(`'s sandbox page should update news when user clicks on next page button and
+    it(` Sandbox page should update news when user clicks on next page button and
             current page counter should update to second page (2)`,
        () => {
         let allNewsBefore = sandboxPage.getAllNews();
@@ -39,9 +35,9 @@ describe('dev.by website',() => {
         expect(sandboxPage.getCurrentPage()).toEqual(2);
     });
 
-    it(`'s sandbox page's next page button should not be active,
+    it(` Sandbox page's next page button should not be active,
             current page should update to 71,
-            last news should be ${data.sandbox_lastNews} (3)`,
+            last news should be ${sandbox_lastNews} (3)`,
        () => {
         let prevValue = sandboxPage.getLastNews();
         sandboxPage.goToLastPage();
@@ -49,10 +45,10 @@ describe('dev.by website',() => {
         sandboxPage.waitForNewsUpdate(prevValue);
         expect(sandboxPage.isNextPageActive()).toEqual(false);
         expect(sandboxPage.getCurrentPage()).toEqual(71);
-        expect(sandboxPage.getLastNews()).toContain(data.sandbox_lastNews);
+        expect(sandboxPage.getLastNews()).toContain(sandbox_lastNews);
     });
 
-    it(`'s last news's header should be correct,
+    it(` Last news's header should be correct,
             there should be 1 comment (4)`,
        () => {
         let lastNewsHeader = sandboxPage.getLastNews();
@@ -61,20 +57,20 @@ describe('dev.by website',() => {
         expect(articlePage.commentExists()).toEqual(true);
     });
 
-    it(`'s last comment date should be ${data.commentDate},
-            comment section should display text: ${data.commentSectionText} (5)`,
+    it(` Last comment date should be ${commentDate},
+            comment section should display text: ${commentSectionText} (5)`,
        () => {
         articlePage.clickOnElement(articlePage.selectors.commentBtn);
-        expect(articlePage.getCommentDate()).toEqual(data.commentDate);
-        expect(articlePage.getCommentSectionText()).toEqual(data.commentSectionText);
+        expect(articlePage.getCommentDate()).toEqual(commentDate);
+        expect(articlePage.getCommentSectionText()).toEqual(commentSectionText);
     });
 
-    it(`'s should open login form (6)`,
+    it(` News page click on comment section should open login form (6)`,
        () => {
-           //this click does not work with the first try for some reason
-        articlePage.clickOnElement(articlePage.selectors.commentSection);
-        articlePage.clickOnElement(articlePage.selectors.commentSection);
-
+        browser.waitUntil(() => {
+            articlePage.clickOnElement(articlePage.selectors.commentSection);
+            return authPage.isAtAuthPage();
+          }, 5000, `click on comment section must lead to auth page.`);
         expect(authPage.isAtAuthPage()).toEqual(true);
     });
 

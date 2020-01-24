@@ -5,7 +5,6 @@ const logger = log4js.getLogger('default');
 const selectors = {
     errorBox: `//span[@class="message message_error"]`,
     submitBtn: `//input[@type="submit"]`,
-
 };
 
 class BasePage {
@@ -43,6 +42,7 @@ class BasePage {
         logger.debug(`enterText: trying to enter text: ${text} in a form: ${selector}.`);
         $(selector).setValue(text);
     }
+
     clearText(selector) {
         logger.debug(`clearText: clearing text of element: ${selector}.`);
         $(selector).clearValue();
@@ -83,7 +83,6 @@ class BasePage {
         logger.debug(`clickOnElement: Trying to click on element: (${selector}).`);
         $(selector).click();
     }
-
 };
 
 module.exports = {

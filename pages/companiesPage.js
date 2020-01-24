@@ -4,41 +4,29 @@ const log4js = require('../loggerConfig/loggerConfigurator'),
 const logger = log4js.getLogger('default');
 
 const selectors = {
-    headerStats: (type) => {
-        return `//a[contains(@class, "header__main-info-item")][contains(text(), "${type}")]`;
-    },
-    checkBoxes: (type) => {
-        return `//div[@class="col"][1]/div[@class="${type}"]/ul/li`;
-    },
-    employeesSlider: (type) => {
-        return `//input[@id="${type}"]`;
-    },
+    headerStats: (type) => `//a[contains(@class, "header__main-info-item")][contains(text(), "${type}")]`,
+    checkBoxes: (type) => `//div[@class="col"][1]/div[@class="${type}"]/ul/li`,
+    employeesSlider: (type) => `//input[@id="${type}"]`,
+    companyName: (index) => `//tbody/tr[${index}]/td[1]/a`,
     checkBoxState: `label`,
     checkBoxLabel: `label`,
     searchByParametersBtn: `//div[@class="t-search"]`,
     resetBtn: `//a[@class="a-reset-all a-cancel"]`,
     searchByParametersWindow: `//div[contains(@class, "widget-companies-fiter")]`,
     submitBtn: `//input[@class="btn blue b-srch-company"]`,
-    companyName: (index) => {
-        return `//tbody/tr[${index}]/td[1]/a`;
-    },
-
-
 };
 const headerStatTypes = {
     companies: `компани`,
     users: `пользовател`,
     jobs: `ваканси`,
-
 };
 const checkBoxType = {
     company: `field-type`,
     city: `field-city`,
-
 };
 const employeeSliderTypes = {
     max: `company_max_employees`,
-    min: `company_min_employees` 
+    min: `company_min_employees`, 
 };
 const checkBoxOn = `active`;
 const searchWindowOpen = 'active';
@@ -117,7 +105,6 @@ class CompaniesPage extends BasePage {
         logger.debug(`submit: saving changes.`);
         super.clickOnElement(selectors.submitBtn);
     }
-
 };
 
 class CheckBox {
@@ -137,12 +124,11 @@ class CheckBox {
         logger.debug(`getState: state of the ${this.name} checkbox: ${state}.`);
         return state;
     }
-
-}
+};
 
 function getNumber(text, type) {
     return parseInt(text.replace(type, '').trim());
-}
+};
 
 module.exports = {
     companiesPage: new CompaniesPage()
